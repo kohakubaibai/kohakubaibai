@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>test background play video</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        #bg-video-controls {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            text-align: right;
+        }
+
+        .icon {
+            font-size: 12px;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+    <div id="bg-video"
+        data-property="{videoURL:'https://youtu.be/AfKBOsfYiCo', containment:'body', autoPlay:true, mute:true, startAt:0, showControls:false}"
+        data-poster="images/poster.jpg"></div>
+    <div id="bg-video-controls">
+        <a id="bg-video-volume" class="icon icon-mute" href="#" title="Unmute"><span
+                class="screen-reader-text">Unmute</span></a>
+        <a id="bg-video-play" class="icon icon-pause" href="#" title="Pause"><span
+                class="screen-reader-text">Pause</span></a>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mb.YTPlayer/3.2.10/jquery.mb.YTPlayer.js"></script>
+    <script>
+        $(function(){
+            // Add YouTube video background
+            var bgVideo = $('#bg-video');
+            bgVideo.YTPlayer();
+            $('#bg-video-volume').click(function(e){
+                var bgVideoVol = $(this);
+                e.preventDefault();
+                if( bgVideoVol.hasClass('icon-mute') ) {
+                    bgVideoVol.removeClass('icon-mute').addClass('icon-sound').attr('title', 'Mute');
+                    bgVideo.YTPUnmute();
+                } else {
+                    bgVideoVol.removeClass('icon-sound').addClass('icon-mute').attr('title', 'Unmute');
+                    bgVideo.YTPMute();
+                }
+            });
+            $('#bg-video-play').click(function(e){
+                var bgVideoPlay= $(this);
+                e.preventDefault();
+                if( bgVideoPlay.hasClass('icon-pause') ) {
+                    bgVideoPlay.removeClass('icon-pause').addClass('icon-play').attr('title', 'Play');
+                    bgVideo.YTPPause();
+                } else {
+                    bgVideoPlay.removeClass('icon-play').addClass('icon-pause').attr('title', 'Pause');
+                    bgVideo.YTPPlay();
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
